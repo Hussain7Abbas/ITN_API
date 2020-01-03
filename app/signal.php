@@ -12,7 +12,7 @@ class signal extends Model
     /* ============== The attributes that are mass assignable. =============
                                 * @var array */
     protected $fillable = [
-        'idSi', 'action', 'pairs', 'tp', 'sl', 'lot', 'date'
+        'idSi', 'action', 'pairs', 'tp', 'sl', 'lotXM', 'lotTNFX', 'status', 'date'
     ];
 
     /**

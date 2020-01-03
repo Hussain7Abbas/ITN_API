@@ -17,9 +17,11 @@ class Signals extends Migration
             $table->increments('idSi');
             $table->boolean('action');
             $table->string('pairs', 6);
-            $table->decimal('tp', 5, 5);
-            $table->decimal('sl', 5, 5);
-            $table->decimal('lot', 2, 2);
+            $table->float('tp', 10, 5);
+            $table->float('sl', 10, 5);
+            $table->float('lotXM');
+            $table->float('lotTNFX');
+            $table->boolean('status');
             $table->string('date', 20);
         });
     }

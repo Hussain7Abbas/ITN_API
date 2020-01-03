@@ -13,7 +13,7 @@ class signalsController extends BaseController
     // ===================== Get signals ========================
 
     public function getsignals($idSi){
-        $signals = Signal::orderBy('idSi', 'desc')->where('idSi', '<', $idSi)->limit(15)->get();
+        $signals = Signal::orderBy('status', 'desc')->orderBy('idSi', 'desc')->where('idSi', '<', $idSi)->limit(15)->get();
         return $this->sendResponse($signals->toArray(), Signal::all()->count() . '-signals Read Succesfully');
     }
 
@@ -27,7 +27,7 @@ class signalsController extends BaseController
             'searchText' => 'required'
         ]);
         if($validator->fails()){return response()->json($validator->errors()->toJson(), 400);}
-        $signals = Signal::orderBy('idSi', 'desc')->where($request->get('searchCol'), 'like',  '%' . $request->get('searchText') . '%')->get();
+        $signals = Signal::orderBy('status', 'desc')->orderBy('idSi', 'desc')->where($request->get('searchCol'), 'like',  '%' . $request->get('searchText') . '%')->get();
         return $this->sendResponse($signals->toArray(), Signal::all()->count() . '-Search Completed Succesfully');
     }
 
@@ -39,7 +39,9 @@ class signalsController extends BaseController
             'pairs' => 'required|string|max:6',
             'tp' => 'required|numeric',
             'sl' => 'required|numeric',
-            'lot' => 'required|numeric'
+            'lotXM' => 'required|numeric',
+            'lotTNFX' => 'required|numeric',
+            'status' => 'required|boolean',
         ]);
 
         if($validator->fails()){
@@ -51,8 +53,10 @@ class signalsController extends BaseController
             'pairs' => $request->get('pairs'),
             'tp' => $request->get('tp'),
             'sl' => $request->get('sl'),
-            'lot' => $request->get('lot'),
-            'date' => date("Y/m/d H:i:s")
+            'lotXM' => $request->get('lotXM'),
+            'lotTNFX' => $request->get('lotTNFX'),
+            'status' => $request->get('status'),
+            'date' => date("Y-m-d H:i")
         ]);
         return $this->sendResponse($signal->toArray(), 'Signal Created Succesfully');
     }
@@ -81,9 +85,11 @@ class signalsController extends BaseController
         if(isset($input['pairs'])){$signal->pairs = $input['pairs'];}
         if(isset($input['tp'])){$signal->tp = $input['tp'];}
         if(isset($input['sl'])){$signal->sl = $input['sl'];}
-        if(isset($input['lot'])){$signal->lot = $input['lot'];}
+        if(isset($input['lotXM'])){$signal->lotXM = $input['lotXM'];}
+        if(isset($input['lotTNFX'])){$signal->lotTNFX = $input['lotTNFX'];}
+        if(isset($input['status'])){$signal->status = $input['status'];}
 
-        $signal->pairs = date("Y/m/d H:i:s");
+        $signal->date = date("Y-m-d H:i");
         $signal->save();
         return $this->sendResponse($signal->toArray(), 'Signal Updated Succesfully');
     }

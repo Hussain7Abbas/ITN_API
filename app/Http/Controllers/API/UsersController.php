@@ -12,8 +12,8 @@ class UsersController extends BaseController
 
     // ===================== Get Users ========================
 
-    public function getUsers($idUs){
-        $users = User::orderBy('idUs', 'desc')->where('idUs', '<', $idUs)->limit(15)->get();
+    public function getUsers($joinDay){
+        $users = User::orderBy('joinDay', 'desc')->where('joinDay', '<', $joinDay)->limit(15)->get();
         return $this->sendResponse($users->toArray(), User::all()->count() . '-Users Read Succesfully');
     }
 
@@ -27,7 +27,7 @@ class UsersController extends BaseController
             'searchText' => 'required'
         ]);
         if($validator->fails()){return response()->json($validator->errors()->toJson(), 400);}
-        $users = User::orderBy('idUs', 'desc')->where($request->get('searchCol'), 'like',  '%' . $request->get('searchText') . '%')->get();
+        $users = User::orderBy('joinDay', 'desc')->where($request->get('searchCol'), 'like',  '%' . $request->get('searchText') . '%')->get();
         return $this->sendResponse($users->toArray(), User::all()->count() . '-Search Completed Succesfully');
     }
 
@@ -35,13 +35,14 @@ class UsersController extends BaseController
 
     public function store(Request $request){
         $validator = Validator::make($request->all(), [
+            'idUs' => 'required|string|max:10',
             'name' => 'required|unique:users',
             'phone' => 'required|numeric',
             'gender' => 'required|boolean',
-            'address' => 'required|string|max:50',
-            'XM' => 'required|string|max:25',
-            'TNFX' => 'required|string|max:25',
-            'joinDay' => 'required|string|max:10',
+            'address' => 'max:50',
+            'XM' => 'required|string|max:30',
+            'TNFX' => 'max:30',
+            'joinDay' => 'required|string|max:20',
             'joinDate' => 'required|string|max:10',
         ]);
 
@@ -49,6 +50,7 @@ class UsersController extends BaseController
             return response()->json($validator->errors()->toJson(), 400);
         }
         $user = User::create([
+            'idUs' => $request->get('idUs'),
             'name' => $request->get('name'),
             'phone' => $request->get('phone'),
             'gender' => $request->get('gender'),
@@ -58,6 +60,7 @@ class UsersController extends BaseController
             'joinDay' => $request->get('joinDay'),
             'joinDate' => $request->get('joinDate')
         ]);
+        $user['idUs'] = $request->get('idUs');
         return $this->sendResponse($user->toArray(), 'User Created Succesfully');
     }
 
@@ -90,6 +93,7 @@ class UsersController extends BaseController
             }
         }
 
+        if(isset($input['idUs'])){$user->idUs = $input['idUs'];}
         if(isset($input['name'])){$user->name = $input['name'];}
         if(isset($input['phone'])){$user->phone = $input['phone'];}
         if(isset($input['gender'])){$user->gender = $input['gender'];}

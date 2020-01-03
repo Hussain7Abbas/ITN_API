@@ -16,12 +16,12 @@ class Users extends Migration
         Schema::create('users', function (Blueprint $table) {
             $table->string('idUs', 10);
             $table->string('name', 20)->unique();
-            $table->tinyInteger('phone');
+            $table->bigInteger('phone');
             $table->boolean('gender');
             $table->string('address', 50);
-            $table->string('XM', 25);
-            $table->string('TNFX', 25);
-            $table->string('joinDay', 10);
+            $table->string('XM', 30);
+            $table->string('TNFX', 30);
+            $table->string('joinDay', 20);
             $table->string('joinDate', 10);
         });
     }

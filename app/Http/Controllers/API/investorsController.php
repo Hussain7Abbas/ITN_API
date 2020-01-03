@@ -50,7 +50,7 @@ class investorsController extends BaseController
             'phone' => $request->get('phone'),
             'email' => $request->get('email'),
             'price' => $request->get('price'),
-            'date' => date("Y/m/d H:i:s")
+            'date' => date("Y/m/d H:i")
         ]);
         return $this->sendResponse($investor->toArray(), 'Investor Created Succesfully');
     }
@@ -89,7 +89,7 @@ class investorsController extends BaseController
         if(isset($input['email'])){$investor->email = $input['email'];}
         if(isset($input['price'])){$investor->price = $input['price'];}
 
-        $investor->price = date("Y/m/d H:i:s");
+        $investor->date = date("Y/m/d H:i:s");
         $investor->save();
         return $this->sendResponse($investor->toArray(), 'Investor Updated Succesfully');
     }
