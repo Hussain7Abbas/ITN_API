@@ -19,7 +19,7 @@ class Investors extends Migration
             $table->bigInteger('phone');
             $table->string('email', 30);
             $table->float('price', 12, 2);
-            $table->string('date', 10);
+            $table->string('date', 20);
         });
     }
 

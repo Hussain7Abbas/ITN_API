@@ -89,7 +89,7 @@ class investorsController extends BaseController
         if(isset($input['email'])){$investor->email = $input['email'];}
         if(isset($input['price'])){$investor->price = $input['price'];}
 
-        $investor->date = date("Y/m/d H:i:s");
+        $investor->date = date("Y/m/d H:i");
         $investor->save();
         return $this->sendResponse($investor->toArray(), 'Investor Updated Succesfully');
     }
