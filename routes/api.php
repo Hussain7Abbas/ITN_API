@@ -1,8 +1,9 @@
 <?php
 
-Route::post('img/{dir}/{id}', 'API\BaseController@uploadImg');
-Route::delete('img/{dir}/{id}', 'API\BaseController@deleteImg');
-Route::get('img/{dir}/{id}', 'API\BaseController@getImg');
+// Route::post('img/{dir}/{id}', 'API\BaseController@uploadImg');
+// Route::delete('img/{dir}/{id}', 'API\BaseController@deleteImg');
+// Route::get('img/{dir}/{id}', 'API\BaseController@getImg');
+Route::post('notifi', 'API\BaseController@sendMessage');
 
 
 Route::group(['prefix' => 'users'], function () {
