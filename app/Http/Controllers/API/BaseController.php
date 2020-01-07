@@ -48,10 +48,10 @@ class BaseController extends Controller
     public function sendMessage(Request $request){
 
 		$fields = array(
-			'app_id' => "b80afd0e-f7ea-4852-ba10-2e02bba5dfbd",
-            'filters' => array(array("field" => "tag", "key" => "active", "relation" => "=", "value" => "true")),
-            'headings' => array("ar" => $request->get('headings')),
-			'contents' => array("ar" => $request->get('contents'))
+            'app_id' => "b80afd0e-f7ea-4852-ba10-2e02bba5dfbd",
+            'included_segments' => array('activeUs'),
+            'headings' => array("en" => $request->get('headings')),
+			'contents' => array("en" => $request->get('contents'))
 		);
 
 		$fields = json_encode($fields);
